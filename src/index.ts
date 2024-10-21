@@ -3,7 +3,10 @@ export function tryNumber(value: any, fallback: any = undefined) {
     return value;
   }
   if (typeof value === "string") {
-    return parseFloat(value);
+    const val = parseFloat(value);
+    if (!isNaN(val)) {
+      return val;
+    }
   }
   return fallback;
 }
@@ -13,7 +16,10 @@ export function tryInt(value: any, fallback: any = undefined) {
     return Math.floor(value);
   }
   if (typeof value === "string") {
-    return parseInt(value);
+    const val = parseInt(value);
+    if (!isNaN(val)) {
+      return val;
+    }
   }
   return fallback;
 }

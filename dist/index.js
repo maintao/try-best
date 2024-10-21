@@ -10,7 +10,10 @@ function tryNumber(value, fallback = undefined) {
         return value;
     }
     if (typeof value === "string") {
-        return parseFloat(value);
+        const val = parseFloat(value);
+        if (!isNaN(val)) {
+            return val;
+        }
     }
     return fallback;
 }
@@ -19,7 +22,10 @@ function tryInt(value, fallback = undefined) {
         return Math.floor(value);
     }
     if (typeof value === "string") {
-        return parseInt(value);
+        const val = parseInt(value);
+        if (!isNaN(val)) {
+            return val;
+        }
     }
     return fallback;
 }
