@@ -1,4 +1,4 @@
-import { tryNumber, tryInt, tryBoolean, tryString, tryObject } from "./index";
+import { tryNumber, tryInt, tryBoolean, tryString, tryObject, tryDate, tryAny } from "./index";
 
 // Test functions
 console.log("Testing tryNumber:");
@@ -31,3 +31,16 @@ console.log(tryObject({ key: "value" })); // Should output { key: "value" }
 console.log(tryObject('{"key": "value"}')); // Should output { key: "value" }
 console.log(tryObject("not an object", { default: true })); // Should output { default: true }
 console.log(tryObject("not an object")); // Should output undefined (default fallback)
+
+console.log("\nTesting tryDate:");
+console.log(tryDate("2024-01-01")); // Should output new Date("2024-01-01")
+console.log(tryDate("2024-01-01T00:00:00Z")); // Should output new Date("2024-01-01T00:00:00Z")
+console.log(tryDate("not a date")); // Should output undefined (default fallback)
+console.log(tryDate(new Date())); // Should output new Date()
+
+console.log("\nTesting tryAny:");
+console.log(tryAny("42")); // Should output 42
+console.log(tryAny("undefined")); // Should output undefined
+console.log(tryAny("null")); // Should output null
+console.log(tryAny("false")); // Should output false
+console.log(tryAny("just a string")); // Should output "just a string"

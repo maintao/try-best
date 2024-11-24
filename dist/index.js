@@ -5,6 +5,8 @@ exports.tryInt = tryInt;
 exports.tryBoolean = tryBoolean;
 exports.tryString = tryString;
 exports.tryObject = tryObject;
+exports.tryDate = tryDate;
+exports.tryAny = tryAny;
 function tryNumber(value, fallback = undefined) {
     if (typeof value === "number") {
         return value;
@@ -64,5 +66,43 @@ function tryObject(value, fallback = undefined) {
     catch (e) {
         return fallback;
     }
+}
+function tryDate(value, fallback = undefined) {
+    if (value instanceof Date) {
+        return value;
+    }
+    const timestamp = Date.parse(value);
+    if (isNaN(timestamp) === false) {
+        return new Date(timestamp);
+    }
+    return fallback;
+}
+function tryAny(value) {
+    if (value === "undefined") {
+        return undefined;
+    }
+    if (value === "null") {
+        return null;
+    }
+    let result;
+    // number
+    result = tryNumber(value);
+    if (result !== undefined) {
+        return result;
+    }
+    // bool
+    result = tryBoolean(value);
+    if (result !== undefined) {
+        return result;
+    }
+    // json
+    if (/(^\{.*\}$)|(^\[.*\]$)/.test(value)) {
+        result = tryObject(value);
+        if (result !== undefined) {
+            return result;
+        }
+    }
+    // string
+    return tryString(value);
 }
 //# sourceMappingURL=index.js.map

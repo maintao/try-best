@@ -60,3 +60,50 @@ export function tryObject(value: any, fallback: any = undefined) {
     return fallback;
   }
 }
+
+export function tryDate(value: any, fallback: any = undefined) {
+  if (value instanceof Date) {
+    return value;
+  }
+
+  const timestamp = Date.parse(value);
+  if (isNaN(timestamp) === false) {
+    return new Date(timestamp);
+  }
+
+  return fallback;
+}
+
+export function tryAny(value: any): any {
+  if (value === "undefined") {
+    return undefined;
+  }
+
+  if (value === "null") {
+    return null;
+  }
+
+  let result: any;
+  // number
+  result = tryNumber(value);
+  if (result !== undefined) {
+    return result;
+  }
+
+  // bool
+  result = tryBoolean(value);
+  if (result !== undefined) {
+    return result;
+  }
+
+  // json
+  if (/(^\{.*\}$)|(^\[.*\]$)/.test(value)) {
+    result = tryObject(value);
+    if (result !== undefined) {
+      return result;
+    }
+  }
+
+  // string
+  return tryString(value);
+}
