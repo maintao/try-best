@@ -61,6 +61,21 @@ export function tryObject(value: any, fallback: any = undefined) {
   }
 }
 
+export function tryArray(value: any, fallback: any = undefined) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+  try {
+    let ret = JSON.parse(value);
+    if (Array.isArray(ret)) {
+      return ret;
+    }
+    return fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+
 export function tryDate(value: any, fallback: any = undefined) {
   if (value instanceof Date) {
     return value;

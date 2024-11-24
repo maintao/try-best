@@ -1,4 +1,13 @@
-import { tryNumber, tryInt, tryBoolean, tryString, tryObject, tryDate, tryAny } from "./index";
+import {
+  tryNumber,
+  tryInt,
+  tryBoolean,
+  tryString,
+  tryObject,
+  tryDate,
+  tryAny,
+  tryArray,
+} from "./index";
 
 // Test functions
 console.log("Testing tryNumber:");
@@ -44,3 +53,8 @@ console.log(tryAny("undefined")); // Should output undefined
 console.log(tryAny("null")); // Should output null
 console.log(tryAny("false")); // Should output false
 console.log(tryAny("just a string")); // Should output "just a string"
+
+console.log("\nTesting tryArray:");
+console.log(tryArray([1, 2, 3])); // Should output [1, 2, 3]
+console.log(tryArray("[1, 2, 3]")); // Should output [1, 2, 3]
+console.log(tryArray({ a: 1, b: 2 })); // Should output undefined

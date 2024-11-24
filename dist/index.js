@@ -5,6 +5,7 @@ exports.tryInt = tryInt;
 exports.tryBoolean = tryBoolean;
 exports.tryString = tryString;
 exports.tryObject = tryObject;
+exports.tryArray = tryArray;
 exports.tryDate = tryDate;
 exports.tryAny = tryAny;
 function tryNumber(value, fallback = undefined) {
@@ -62,6 +63,21 @@ function tryObject(value, fallback = undefined) {
     }
     try {
         return JSON.parse(value);
+    }
+    catch (e) {
+        return fallback;
+    }
+}
+function tryArray(value, fallback = undefined) {
+    if (Array.isArray(value)) {
+        return value;
+    }
+    try {
+        let ret = JSON.parse(value);
+        if (Array.isArray(ret)) {
+            return ret;
+        }
+        return fallback;
     }
     catch (e) {
         return fallback;
